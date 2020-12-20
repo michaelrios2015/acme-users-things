@@ -1,8 +1,9 @@
 import { createStore } from 'redux';
 const LOAD_USERS = 'LOAD_USERS';
 const LOAD_THINGS = 'LOAD_THINGS';
+const SET_VIEW = 'SET_VIEW';
 
-const store = createStore((state = { users: [], things: []}, action)=> {
+const store = createStore((state = { users: [], things: [], view: 'users'}, action)=> {
     //console.log(action.type);
     if(action.type === LOAD_USERS){
         state = {...state, users: action.users }
@@ -30,5 +31,13 @@ const loadThings = (things)=> {
     //console.log(users);
 };
 
+const setView = (view)=> {
+    return {
+        type: SET_VIEW,
+        view
+    };
+    //console.log(users);
+};
+
 export default store; 
-export { loadUsers, loadThings };
+export { loadUsers, loadThings, setView };

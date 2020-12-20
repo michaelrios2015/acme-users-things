@@ -6,8 +6,8 @@ const Nav = ({ users, things })=> {
 console.log(users);
     return (
         <nav>
-            <a href='#users'>Users ({ users.length })</a>
-            <a href='#things'>Users ({ things.length })</a> 
+            <a href='#users'>Users ({ users.length > 4 ? 'a': 'B'})</a>
+            <a href='#things'>Things ({ things.length })</a> 
         </nav>
     )
 };

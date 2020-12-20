@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import { Provider, connect } from 'react-redux';
-import store, { loadUsers, loadThings } from './store';
+import store, { loadUsers, loadThings, setView } from './store';
 import Nav from './Nav';
 import Users from './Users';
-
+import Things from './Things';
 
 
 const App = connect(
@@ -19,19 +19,25 @@ const App = connect(
                 dispatch(loadUsers(users));
                 const things = (await axios.get('/api/things')).data;
                 dispatch(loadThings(things));
-            }
+            },
+            setView: function(view){
+              dispatch(setView(view));
+            } 
         }
     }
 )(class App extends Component{
   componentDidMount(){
     this.props.bootstrap();
+    this.props.setView(window.location.hash.slice(1));
+    // window.addEventListener('hashchange', ()=> {});
   }
   render(){
-    const { users } = this.props;
+    const { users, props } = this.props;
     return (
       <div>
         <Nav />
         <Users />
+        <Things />
       </div>
     );
   }
