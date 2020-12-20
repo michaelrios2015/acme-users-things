@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import axios from 'axios';
 import { Provider, connect } from 'react-redux';
-import store, { loadUsers } from './store';
+import store, { loadUsers, loadThings } from './store';
 import Nav from './Nav';
-
+import Users from './Users';
 
 
 
@@ -17,6 +17,8 @@ const App = connect(
             bootstrap: async()=>{
                 const users = (await axios.get('/api/users')).data;
                 dispatch(loadUsers(users));
+                const things = (await axios.get('/api/things')).data;
+                dispatch(loadThings(things));
             }
         }
     }
@@ -29,17 +31,7 @@ const App = connect(
     return (
       <div>
         <Nav />
-        <ul>
-            {
-            users.map( user => { 
-                return (
-                <li key={ user.id }>
-                    { user.name }
-                </li>
-                );
-            })
-            }
-        </ul>
+        <Users />
       </div>
     );
   }
