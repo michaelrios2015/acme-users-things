@@ -3,10 +3,10 @@ import { connect } from 'react-redux';
 
 
 const Nav = ({ users, things })=> {
-console.log(users);
+//console.log(users);
     return (
         <nav>
-            <a href='#users'>Users ({ users.length > 4 ? 'a': 'B'})</a>
+            <a href='#users'>Users ({ users.length > 1 ? users.length : 'B'})</a>
             <a href='#things'>Things ({ things.length })</a> 
         </nav>
     )

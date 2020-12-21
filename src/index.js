@@ -14,11 +14,9 @@ const App = connect(
     },
     (dispatch)=> {
         return {
-            bootstrap: async()=>{
-                const users = (await axios.get('/api/users')).data;
-                dispatch(loadUsers(users));
-                const things = (await axios.get('/api/things')).data;
-                dispatch(loadThings(things));
+            bootstrap: ()=>{
+                dispatch(loadUsers());
+                dispatch(loadThings());
             },
             setView: function(view){
               dispatch(setView(view));
@@ -28,16 +26,19 @@ const App = connect(
 )(class App extends Component{
   componentDidMount(){
     this.props.bootstrap();
+    window.addEventListener('hashchange', ()=> {
+      this.props.setView(window.location.hash.slice(1));
+    });
     this.props.setView(window.location.hash.slice(1));
-    // window.addEventListener('hashchange', ()=> {});
   }
   render(){
-    const { users, props } = this.props;
+    const { users, view } = this.props;
+    //console.log(view);
     return (
       <div>
         <Nav />
-        <Users />
-        <Things />
+        { view === 'users' && <Users /> }
+        { view === 'things' && <Things /> }
       </div>
     );
   }
